@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project name="ProjetGSI2012_Sudoku" default="run">
+ 
+	<property name="src.dir" value="src" />
+	<property name="classes.dir" value="bin" />
+	<property name="jar.dir" value="lib" />
+	<property name="jar_name" value="Sudoku.jar" />
+
+	<target name="clean">
+		<delete dir="${classes.dir}"/>
+		<delete dir="${jar.dir}"/>
+	</target>
+
+	<target name="compile" depends="clean">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" />
+	</target>
+
+    <target name="jar" depends="compile">
+		<mkdir dir="${jar.dir}" />
+        <jar destfile="${jar.dir}/${jar_name}" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="view.Executable"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="${classes.dir}"/>
+        </jar>
+    </target>
+
+	<target name="run" depends="jar">
+		<java jar="${jar.dir}/${jar_name}" fork="true"/>
+	</target>
+
+</project>
+
